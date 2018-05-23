@@ -1,0 +1,7 @@
+{
+  "env": {
+      "MONGO_URL": "mongodb://localhost:27017/rest-api",
+      "PORT": 8000,
+      "JWT_KEY": "secret"
+  }
+}
