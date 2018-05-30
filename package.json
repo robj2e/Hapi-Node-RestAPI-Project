@@ -4,18 +4,53 @@
   "description": "Project to learn Hapi.js, only just documentation",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js"
+    "test": "export NODE_ENV=test && ./node_modules/.bin/ava",
+    "start": "nodemon src/server.js",
+    "coverage": "export NODE_ENV=test && ./node_modules/.bin/nyc ./node_modules/.bin/ava"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "ava": "^0.25.0",
     "bcrypt": "^2.0.1",
     "hapi": "^17.4.0",
     "jsonwebtoken": "^8.2.1",
-    "mongoose": "^5.1.1"
+    "mongoose": "^5.1.1",
+    "proxyquire": "^2.0.1",
+    "sinon": "^5.0.10"
   },
   "devDependencies": {
-    "nodemon": "^1.17.4"
+    "nodemon": "^1.17.4",
+    "nyc": "^11.8.0"
+  },
+  "ava": {
+    "files": [
+      "test/**/*.js"
+    ],
+    "source": [
+      "src/**/*.{js,jsx}",
+      "!dist/**/*"
+    ],
+    "concurrency": 5,
+    "failFast": true,
+    "tap": false,
+    "powerAssert": false
+  },
+  "nyc": {
+    "lines": 90,
+    "statements": 90,
+    "functions": 90,
+    "branches": 90,
+    "include": [
+      "src/**/*.js"
+    ],
+    "reporter": [
+      "text",
+      "lcov",
+      "html"
+    ],
+    "cache": true,
+    "all": true,
+    "check-coverage": false
   }
 }
