@@ -16,14 +16,12 @@ async function userSignup (request, h) {
       return h.response({message: 'email address already exists'}).code(409)
     } else {
       const hash = await bcrypt.hash(request.payload.password, 10)
-      let user = new User({
+      await User.create({
         _id: new mongoose.Types.ObjectId(),
         email: request.payload.email,
         password: hash
-
       })
       console.log(user)
-      await user.save()
       return h.response({message: 'User created'}).code(201)
     }
   } catch (err) {

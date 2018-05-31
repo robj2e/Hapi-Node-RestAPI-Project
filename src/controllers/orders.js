@@ -69,7 +69,7 @@ async function ordersCreateOrder (request, h) {
   } catch (err) {
     console.log(err)
     const error = {
-      error: err
+      error: err.message
     }
     return h.response(error).code(500)
   }
@@ -93,7 +93,7 @@ async function ordersGetOrder (request, h) {
     }
     return h.response(response).code(200)
   } catch (err) {
-    return h.response({error: err}).code(500)
+    return h.response({error: err.message}).code(500)
   }
 }
 
@@ -110,6 +110,6 @@ async function ordersDeleteOrder (request, h) {
     }
     return h.response(response).code(200)
   } catch (err) {
-    return h.response({error: err}).code(500)
+    return h.response({error: err.message}).code(500)
   }
 }
