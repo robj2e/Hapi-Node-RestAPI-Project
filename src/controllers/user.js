@@ -26,7 +26,7 @@ async function userSignup (request, h) {
     }
   } catch (err) {
     console.log(err)
-    return h.response({error: err}).code(501)
+    return h.response({error: err.message}).code(501)
   }
 }
 
@@ -53,7 +53,7 @@ async function userLogin (request, h) {
     h.response({message: 'Auth failed'}).code(401)
   } catch (err) {
     console.log(err)
-    return h.response({error: err}).code(500)
+    return h.response({error: err.message}).code(500)
   }
 }
 

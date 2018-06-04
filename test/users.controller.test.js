@@ -71,3 +71,77 @@ test('userSignup function Returns 200 code for successful user signup', async t 
   // Assert
   t.true(h.response.calledWith(expected))
 })
+
+test('During user signup, returns an error 501 if problem occurs during this process', async t => {
+  // Arrange
+  t.context.User.find().exec.throws('Error', ['Internal server error'])
+
+  const request = {
+    payload: {
+      email: 'rob@rob2e.com',
+      password: 'tshirt'
+    }
+  }
+
+  const h = {
+    response: sinon.stub().returns({
+      code: sinon.stub()
+    })
+  }
+
+  const expected = {error: 'Internal server error'}
+
+  // Act
+  await t.context.controller.userSignup(request, h)
+  // Assert
+  t.true(h.response.calledWith(expected))
+})
+
+test('During user signin, returns an unauthorised error 401 if e-mail address not found', async t => {
+  // Arrange
+  t.context.User.find().exec.resolves([])
+
+  const request = {
+    payload: {
+      'email': 'rob222eeee@gmail.com', 'password': 'testpassword'
+    }
+  }
+
+  const h = {
+    response: sinon.stub().returns({
+      code: sinon.stub()
+    })
+  }
+
+  const expected = {message: 'Auth Failed'}
+
+  // Act
+  await t.context.controller.userLogin(request, h)
+  // Assert
+  t.true(h.response.calledWith(expected))
+})
+
+test('During user login, returns an error response 500 if problem occurs during this process', async t => {
+  // Arrange
+  t.context.User.find().exec.throws('Error', ['Internal server error'])
+
+  const request = {
+    payload: {
+      email: 'rob@rob2e.com',
+      password: 'tshirt'
+    }
+  }
+
+  const h = {
+    response: sinon.stub().returns({
+      code: sinon.stub()
+    })
+  }
+
+  const expected = {error: 'Internal server error'}
+
+  // Act
+  await t.context.controller.userLogin(request, h)
+  // Assert
+  t.true(h.response.calledWith(expected))
+})
